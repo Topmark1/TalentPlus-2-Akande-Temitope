@@ -76,7 +76,7 @@
   height: 8px;
   width: 8px;
   border-radius: 50%;
-  background-color: #0e5a18;
+  background-color: #0456b3;
 }
 
 .member_name{
@@ -133,7 +133,7 @@
 
 .message__author {
   margin-right: 10px;
-  color: #2aca3e!important;
+  color: #4a81f6!important;
 
 }
 
@@ -188,6 +188,15 @@
   background-color:#3f434a;
   height:60vh;
   display:none;
+}
+#stream__box .video__container{
+  border:2px solid #000;
+  border-radius:0;
+  height: 100%!important;
+  width: 100% !important;
+}
+#stream__box video{
+  border-radius:0%;
 }
 #streams__container{
   display:flex;
