@@ -10,6 +10,10 @@ if(!uid){
 let token = null; //for serious project
 let client;
 
+//setting up for real time messaging
+let rtmClient;
+let channel;
+
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 let groupId = urlParams.get('group')
@@ -31,6 +35,23 @@ if(!groupId){
 
  //initialization of Agora using ids, token if available and uid
  let joingroupInit = async()=> {
+    rtmClient = await AgoraRTM.createInstance(APP_ID)
+    await rtmClient.login({uid,token})
+
+    //display name
+    await rtmClient.addOrUpdateLocalUserAttributes({'name':displayName})
+
+    //crating a chat channel and joining
+    channel = await rtmClient.createChannel(groupId)
+    await channel.join()
+
+    channel.on('MemberJoined',handleMemberJoined)
+    channel.on('MemberLeft',handleMemberLeft)
+    channel.on('ChannelMessage',handleChannelMessage)
+
+    getMembers()
+    addBotMessageToDom(`Welcome to the room ${displayName}! 👋`)
+
     client = AgoraRTC.createClient({mode:'rtc',codec:'vp8'})
     await client.join(APP_ID,groupId,token,uid)
     client.on('user-published',handleUserPublished)
