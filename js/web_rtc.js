@@ -34,7 +34,8 @@ if(!groupId){
 
  let localScreenTracks;
  let sharingScreen = false;
-
+ spinner = `<div class="video__container" id="spinner" style='background-color:gray'><span style="margin-top:50px;color:black;font-weight:800">Loading . . .</span></div>`
+ document.getElementById('streams__container').insertAdjacentHTML('beforeend',spinner);
  //initialization of Agora using ids, token if available and uid
  let joingroupInit = async()=> {
     rtmClient = await AgoraRTM.createInstance(APP_ID)
@@ -106,6 +107,7 @@ let handleUserPublished = async(user,mediaType)=>{
     if(player===null){ //to avoid duplicate
         player = `<div class="video__container" id="user-container-${user.uid}">
         <div class="video__player" id="user-${user.uid}"></div></div>`
+        document.getElementById('spinner').remove()
         //append a screen view the the group
         document.getElementById('streams__container').insertAdjacentHTML('beforeend',player)
         document.getElementById(`user-container-${user.uid}`).addEventListener('click',expandVideoFrame)
