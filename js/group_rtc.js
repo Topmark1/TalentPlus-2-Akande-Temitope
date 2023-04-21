@@ -1,5 +1,5 @@
 //declare all relevant parameters
-const APP_ID = "629a3405322b475a9202e4470881665e"
+const APP_ID = "acddbf899d3f4e65b7366c78330ea72d"
 
 let uid = sessionStorage.getItem('uid')
 if(!uid){
@@ -19,7 +19,9 @@ const urlParams = new URLSearchParams(queryString)
 let groupId = urlParams.get('group')
 
 //name of member
-let displayName = localStorage.getItem
+let displayName = localStorage.getItem('display_name')
+console.log('displayName')
+console.log(displayName)
 if(!displayName){
     window.location = 'index.html'
 }
@@ -60,11 +62,14 @@ if(!groupId){
  }
 
  let joinStream = async() => {
-    localTracks = await AgoraRTC.createMicrophoneAndCameraTracks()
+    localTracks = await AgoraRTC.createMicrophoneAndCameraTracks({},{encoderConfig:{
+        width:{min:160,ideal:320,max:1920},
+       height:{min:120,ideal:240,max:1080},
+    }})
     //video quality can be set by putting inside the bracket
     /*({},{encoderConfig:{
-        width:{min:640,ideal:1920,max:1920},
-       height:{min:480,ideal:1080,max:1080},
+        width:{min:160,ideal:320,max:1920},
+       height:{min:120,ideal:240,max:1080},
     }}) */
 
     let player = `<div class="video__container" id="user-container-${uid}"><div class="video__player" id="user-${uid}"></div></div>`

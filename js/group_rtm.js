@@ -1,7 +1,7 @@
 //when member joins the group video
 let handleMemberJoined = async(MemberId) =>{
     console.log('A new member has Joined the video Group:',MemberId)
-    addMemeberToDom(MemberId)
+    addMemberToDom(MemberId)
 
     let members = await channel.getMembers()
     updateMemberTotal(members)
@@ -11,7 +11,7 @@ let handleMemberJoined = async(MemberId) =>{
 
 }
 
-let addMemeberToDom = async (MemberId) =>{
+let addMemberToDom = async (MemberId) =>{
     let {name} = await rtmClient.getUserAttributesByKeys(MemberId,['name'])
     let membersWrapper = document.getElementById('member__list')
     let memberItem = `<div class="member__wrapper" id="member__${MemberId}__wrapper">
@@ -43,14 +43,14 @@ let getMembers = async ()=>{
     let members = await channel.getMembers()
     updateMemberTotal(members)
     for(let i = 0; members.length>i;i++){
-        addMemeberToDom(members[i])
+        addMemberToDom(members[i])
     }
 }
 
 //package message well
 let handleChannelMessage = async (messageData,MemberId)=>{
     console.log('A new message was received')
-    let data = JSON.parse(messageData.text)
+    let data =await JSON.parse(messageData.text)
     console.log(data)
 
     if(data.type === 'chat'){
@@ -108,4 +108,4 @@ let leaveChannel = async ()=>{
 
 window.addEventListener('beforeunload',leaveChannel)
 let messageForm = document.getElementById('message__form')
-messageForm.addEventListnener('submit',sendMessage)
+messageForm.addEventListener('submit',sendMessage)
