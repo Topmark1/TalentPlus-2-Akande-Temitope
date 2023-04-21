@@ -51,7 +51,7 @@ if(!groupId){
     channel.on('MemberJoined',handleMemberJoined)
     channel.on('MemberLeft',handleMemberLeft)
     channel.on('ChannelMessage',handleChannelMessage)
-
+    document.getElementById('spinner').remove()
     getMembers()
     addBotMessageToDom(`Welcome to the room ${displayName}! 👋`)
 
@@ -107,7 +107,7 @@ let handleUserPublished = async(user,mediaType)=>{
     if(player===null){ //to avoid duplicate
         player = `<div class="video__container" id="user-container-${user.uid}">
         <div class="video__player" id="user-${user.uid}"></div></div>`
-        document.getElementById('spinner').remove()
+        
         //append a screen view the the group
         document.getElementById('streams__container').insertAdjacentHTML('beforeend',player)
         document.getElementById(`user-container-${user.uid}`).addEventListener('click',expandVideoFrame)
